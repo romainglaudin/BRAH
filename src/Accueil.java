@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
   
 public class Accueil extends JFrame {
-	
+	//Essai
 public Accueil(){
     this.setTitle("BRAH");
     this.setSize(800,600);
