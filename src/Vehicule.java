@@ -1,14 +1,14 @@
+import java.awt.Image;
+
 
 public class Vehicule extends Mobile {
 	
 	public boolean perso;
-	Image noirblanc = new Image();
+	Image noirblanc;
 	
-	public Vehicule (String pnom, double[] pposition,Image pimage,double[] pvitesse,double[] pposapres,int ppoids, Image pnoirblanc){
-		super(pnom,pposition,pimage,pvitesse,pposapres,ppoids);
-		noirblanc = pnoirblanc;
-		perso= false;
-			
+	public Vehicule (){
+		this.perso=false;
+		this.nom="vehicule";
 	}
 	
 	public void addperso (Perso perso){
