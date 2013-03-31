@@ -70,6 +70,7 @@ public class BoutonJouer extends JButton implements MouseListener{
     //Nous changeons le fond de notre image pour le jaune lors du clic gauche, avec le fichier fondBoutonClic.png
     try {
       img = ImageIO.read(new File("image/Jouer_clic.png"));
+      new Fenetre();
     } catch (IOException e) {
       e.printStackTrace();
     }    
