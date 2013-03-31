@@ -1,22 +1,13 @@
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
-import java.awt.Panel;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
   
 public class Accueil extends JFrame {
 	
-public Accueil(){                
+public Accueil(){
     this.setTitle("BRAH");
     this.setSize(800,600);
     this.setLocationRelativeTo(null);
