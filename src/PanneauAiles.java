@@ -6,7 +6,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class PanneauAiles extends JPanel {
+public class PanneauAiles extends PanneauComposant {
+	public PanneauAiles(){
+		this.composant = new CAiles();
+		
+	}
 	 public void paintComponent(Graphics g){
 		 
 		    try {

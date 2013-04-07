@@ -11,15 +11,21 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
   
-public class BoutonJouer extends JButton implements MouseListener{
-  private String name;
+public class Bouton extends JButton implements MouseListener{
   private Image img;
+  private String Simage;
+  private String Simg_souris;
+  private String Simg_clic;
+  int categorie;
  
-  public BoutonJouer(String str){
+  public Bouton(String str, String image, String image_souris, String image_clic, int nbr){
     super(str);
-    this.name = str;
+    categorie=nbr;
+    this.Simage = image;
+    this.Simg_souris = image_souris;
+    this.Simg_clic = image_clic;
     try {
-      img = ImageIO.read(new File("image/Jouer.png"));
+      this.img = ImageIO.read(new File(image));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -36,7 +42,7 @@ public class BoutonJouer extends JButton implements MouseListener{
  
   public void mouseEntered(MouseEvent event) {    
     try {
-      img = ImageIO.read(new File("image/Jouer_souris.png"));   
+      img = ImageIO.read(new File(Simg_souris));   
     } catch (IOException e) {
       e.printStackTrace();
     }    
@@ -44,7 +50,7 @@ public class BoutonJouer extends JButton implements MouseListener{
  
   public void mouseExited(MouseEvent event) {
     try {
-      img = ImageIO.read(new File("image/Jouer.png"));
+      img = ImageIO.read(new File(Simage));
     } catch (IOException e) {
       e.printStackTrace();
     }    
@@ -52,8 +58,7 @@ public class BoutonJouer extends JButton implements MouseListener{
  
   public void mousePressed(MouseEvent event) {
     try {
-      img = ImageIO.read(new File("image/Jouer_clic.png"));
-      new FenConstruction ();
+      img = ImageIO.read(new File(Simg_clic));      
     } catch (IOException e) {
       e.printStackTrace();
     }    
@@ -62,7 +67,7 @@ public class BoutonJouer extends JButton implements MouseListener{
   public void mouseReleased(MouseEvent event) {
 	  if((event.getY() > 0 && event.getY() < this.getHeight()) && (event.getX() > 0 && event.getX() < this.getWidth())){
       try {
-        img = ImageIO.read(new File("image/Jouer_souris.png"));
+        img = ImageIO.read(new File(Simg_souris));
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -70,10 +75,15 @@ public class BoutonJouer extends JButton implements MouseListener{
 
     else{
       try {
-        img = ImageIO.read(new File("image/Jouer.png")); 
+        img = ImageIO.read(new File(Simage)); 
       } catch (IOException e) {
         e.printStackTrace();
       }
     }   
   }   
+  
+  public int getCategorie (){
+	  return categorie;
+  }
+
 }

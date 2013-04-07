@@ -6,7 +6,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class PanneauBoost extends JPanel {
+public class PanneauBoost extends PanneauComposant {
+	public PanneauBoost(){
+		this.composant = new CBoost();
+	}
 	 public void paintComponent(Graphics g){
 		 
 		    try {

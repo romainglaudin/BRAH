@@ -8,9 +8,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 
-public class PanneauRoue extends JPanel {
+public class PanneauRoue extends PanneauComposant {
 	public PanneauRoue(){
 		this.setSize(200,200);
+		this.composant= new CRoue();
 	}
 	 public void paintComponent(Graphics g){
 		    try {

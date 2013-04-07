@@ -6,7 +6,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class PanneauSki extends JPanel {
+public class PanneauSki extends PanneauComposant {
+	
+	public PanneauSki (){
+		this.composant = new CSki();
+	}
 	 public void paintComponent(Graphics g){
 		 
 		    try {

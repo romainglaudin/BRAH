@@ -5,7 +5,7 @@ public class CRoue  extends Composant {
 	
 	public CRoue (){
 		this.poids=20;
-		this.nom="roue";
+		this.nom="Roue";
 		this.nomimage="image/Rouegif.gif";
 		
 	}

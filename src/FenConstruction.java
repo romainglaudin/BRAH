@@ -6,44 +6,28 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FenConstruction extends Fenetre {
+public class FenConstruction extends JPanel {
 	
-	private JPanel choixcompo;
+	// choix du composant 
+	private JPanel choixcompo; // conteneur images composant plus boutons de sélection
+	private JButton [] bcompo; //boutons de sélection
+	private JButton [] ajouter; // boutons d'ajout
+	private PanneauComposant [] compo; //conteneur images composant
+
+	private JPanel construction1; // conteneur boutons d'ajout (en haut)
+	private JPanel construction2; // conteneurs boutons d'ajout (en bas)
+	private JPanel h[]; // conteneurs images composants du vehicule en cours de construction
+	private JPanel ligneh; // conteneurs  des h[]
+	
+	private JLabel test; // test boucles
+	
+	private boolean c[]; // mémoire d'appui sur bcompo[]
+	
+	// boutons "c'est parti!"  et "retour"
 	private JButton bjeu;
 	private JButton bretour;
-	private JButton bcompo1;
-	private JButton bcompo2;
-	private JButton bcompo3;
-	private JButton bcompo4;
-	private JButton bcompo5;
-	private JButton bcompo6;
-	private JButton ajouter1;
-	private JButton ajouter2;
-	private JButton ajouter3;
-	private JButton ajouter4;
-	private JButton ajouter5;
-	private JButton ajouter6;
-	private JPanel compo5;
-	private JPanel compo6;
 	private JPanel boutons;
-	private JPanel hg;
-	private JPanel h;
-	private JPanel hd;
-	private JPanel bg;
-	private JPanel b;
-	private JPanel bd;
-	private JPanel ligneh;
-	private JPanel ligneb;
-	private JLabel test;
-	private JPanel bchoixcompo;
-	private JPanel construction1;
-	private JPanel construction2;
-	private boolean c1 = false;
-	private boolean c2 = false;
-	private boolean c3 = false;
-	private boolean c4 = false;
-	private boolean c5 = false;
-	private boolean c6 = false;
+	
 	Composant roue =new CRoue();
 	Composant skis = new CSki();
 	Composant ailes = new CAiles();
@@ -52,113 +36,89 @@ public class FenConstruction extends Fenetre {
 	
 	public FenConstruction (){
 		super();
-		
-		JPanel cadre = new JPanel ();
-		
 		// 1)Choix des composants images + boutons
 			//Images
 		choixcompo = new JPanel ();
+		compo = new PanneauComposant [6];
+		compo[0] = new PanneauRoue ();	
+		compo[1] = new PanneauSki();		
+		compo[2] = new PanneauAiles();
+		compo[3] = new PanneauBoost();
+		compo[4] = new PanneauRoue();
+		compo[4].setBackground(Color.YELLOW);
+		compo[5]= new PanneauAiles();
+		compo[5].setBackground(Color.ORANGE);
 		
-		PanneauRoue compo1 = new PanneauRoue ();
+		/**compo[4] = new JPanel ();
+		compo[4].setBackground(Color.YELLOW);
+		compo[4].setSize(200,200);
 		
-		PanneauSki compo2 = new PanneauSki();
-		
-		PanneauAiles compo3 = new PanneauAiles();
-		
-		PanneauBoost compo4 = new PanneauBoost();
-		
-		compo5 = new JPanel ();
-		compo5.setBackground(Color.YELLOW);
-		compo5.setSize(200,200);
-		
-		compo6 = new JPanel ();
-		compo6.setBackground(Color.ORANGE);
-		compo6.setSize(200,200);
+		compo[5] = new JPanel ();
+		compo[5].setBackground(Color.ORANGE);
+		compo[5].setSize(200,200);*/
 		
 
-		choixcompo.setLayout(new GridLayout(1,0));
+		choixcompo.setLayout(new GridLayout(2,0));
 		choixcompo.setBackground(new Color(0,true));
-		choixcompo.add(compo1);
-		choixcompo.add(compo2);
-		choixcompo.add(compo3);
-		choixcompo.add(compo4);
-		choixcompo.add(compo5);
-		choixcompo.add(compo6);
+		for(int i =0; i<compo.length;i++){
+			choixcompo.add(compo[i]);
+		}
 		
 			//Boutons
-		bchoixcompo = new JPanel();
-		bchoixcompo.setLayout(new FlowLayout());
-		bchoixcompo.setBackground(new Color(0,true));
-		bcompo1 = new JButton (roue.nom);
-		bcompo2 = new JButton (skis.nom);
-		bcompo3 = new JButton (ailes.nom);
-		bcompo4 = new JButton (boost.nom);
-		bcompo5 = new JButton ("compo5");
-		bcompo6 = new JButton ("compo6");
+		bcompo = new JButton [6];
+		bcompo[0] = new JButton (roue.nom);
+		bcompo[1] = new JButton (skis.nom);
+		bcompo[2] = new JButton (ailes.nom);
+		bcompo[3] = new JButton (boost.nom);
+		bcompo[4] = new JButton ("compo[4]");
+		bcompo[5] = new JButton ("compo[5]");
 		
-		bchoixcompo.add(bcompo1);
-		bchoixcompo.add(bcompo2);
-		bchoixcompo.add(bcompo3);
-		bchoixcompo.add(bcompo4);
-		bchoixcompo.add(bcompo5);
-		bchoixcompo.add(bcompo6);
-		bcompo1.addActionListener(new ConstructionVehicule());
-		bcompo2.addActionListener(new ConstructionVehicule());
-		bcompo3.addActionListener(new ConstructionVehicule());
-		bcompo4.addActionListener(new ConstructionVehicule());
-		bcompo5.addActionListener(new ConstructionVehicule());
-		bcompo6.addActionListener(new ConstructionVehicule());
+		c = new boolean [bcompo.length];
+		
+		for(int i=0; i<bcompo.length;i++ ){
+			choixcompo.add(bcompo[i]);
+			bcompo[i].addActionListener(new ConstructionVehicule());
+			c[i]=false;
+		}
 		
 		// Assemblage vehicule
 		// a) Selection emplacement piece
 		construction1 = new JPanel();
-		construction1.setLayout(new GridLayout(1,0));
+		construction1.setLayout(new GridLayout());
 		construction1.setBackground(new Color(0,true));
 		construction2 = new JPanel();
 		construction2.setLayout(new GridLayout(1,0));
 		construction2.setBackground(new Color(0,true));
 		
-		ajouter1 = new JButton("Ajouter");
-		ajouter2 = new JButton("Ajouter");
-		ajouter3 = new JButton("Ajouter");
-		construction1.add(ajouter1);
-		construction1.add(ajouter2);
-		construction1.add(ajouter3);
+		ajouter= new JButton[6];
 		
-		ajouter4 = new JButton("Ajouter");
-		ajouter5 = new JButton("Ajouter");
-		ajouter6 = new JButton("Ajouter");
-		construction2.add(ajouter4);
-		construction2.add(ajouter5);
-		construction2.add(ajouter6);
+		/** affiche la première moitié des boutons au dessus de l'image du véhicule ==> construction1
+		 * 		    la deuxième moitié des boutons en dessous de l'image du véhcule ==> construction2
+		 */
 		
-		ajouter1.addActionListener(new AffichageVehicule());
-		ajouter2.addActionListener(new AffichageVehicule());
-		ajouter3.addActionListener(new AffichageVehicule());
-		ajouter4.addActionListener(new AffichageVehicule());
-		ajouter5.addActionListener(new AffichageVehicule());
-		ajouter6.addActionListener(new AffichageVehicule());
+		for(int i=0; i<ajouter.length/2; i++){ 
+			ajouter[i] = new JButton("Ajouter");
+			construction1.add(ajouter[i]);
+			ajouter[i].addActionListener(new AffichageVehicule());
+		}
+		
+		for(int i=ajouter.length/2; i<ajouter.length;i++){
+			ajouter[i] = new JButton("Ajouter");
+			construction2.add(ajouter[i]);
+			ajouter[i].addActionListener(new AffichageVehicule());
+		}
 		
 		//b) Positionnement pieces
 		ligneh = new JPanel();
-		ligneb= new JPanel();
-		hg = new JPanel(); h = new JPanel(); hd = new JPanel(); bg = new JPanel(); b = new JPanel(); bd = new JPanel();
-		ligneh.setLayout(new GridLayout(1,0));
-		ligneb.setLayout(new GridLayout(1,0));
-		ligneh.setBackground(new Color(0,true));
-		ligneb.setBackground(new Color(0,true));
-		h.setBackground(new Color(0,true));
-		hg.setBackground(new Color(0,true));
-		hd.setBackground(new Color(0,true));
-		b.setBackground(new Color(0,true));
-		bg.setBackground(new Color(0,true));
-		bd.setBackground(new Color(0,true));
-		ligneh.add(hg);
-		ligneh.add(h);
-		ligneh.add(hd);
-		ligneb.add(bg);
-		ligneb.add(b);
-		ligneb.add(bd);
+		h = new JPanel [6];
+		ligneh.setLayout(new GridLayout(2,0));
+		for(int i=0; i<h.length;i++){
+			h[i]=new JPanel();
+			h[i].setBackground(new Color (0,true));	
+			ligneh.add(h[i]);
+		}
+		
+		ligneh.setBackground(Color.GRAY);
 		
 		
 		
@@ -178,17 +138,15 @@ public class FenConstruction extends Fenetre {
 		test.setSize(100,100);
 		
 		// 3) Agencement global
-		Panneau p = new Panneau ();
+		JPanel p = new JPanel ();
 		p.setLayout(new GridLayout(0,1));
 		p.add(choixcompo);
-		p.add(bchoixcompo);
 		p.add(construction1);
 		p.add(ligneh);
-		p.add(ligneb);
 		p.add(construction2);
 		p.add(boutons);
 		p.add(test);
-		this.setContentPane(p);		
+		this.add(p);		
 		this.setVisible(true);
 	}
 	class AppuiBouton implements ActionListener{
@@ -204,176 +162,34 @@ public class FenConstruction extends Fenetre {
 	
 	class ConstructionVehicule implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource()==bcompo1){
-				vehicule.addcomposant(roue);
-				test.setText("t'es une machine"+" " + vehicule.poids);
-				c1=true;
-				c2=false; c3=false; c4=false; c5=false; c6=false;
+			for(int i=0; i<c.length; i++){
+				c[i]=false;
 			}
-			if(e.getSource()==bcompo2){
-				vehicule.addcomposant(skis);
-				test.setText("t'es une machine2"+" "+vehicule.poids);
-				c2=true;
-				c1=false; c3=false; c4=false; c5=false; c6=false;
-			}
-			if(e.getSource()==bcompo3){
-				vehicule.addcomposant(ailes);
-				test.setText("t'es une machine3"+" "+vehicule.poids);
-				c3=true;
-				c2=false; c1=false; c4=false; c5=false; c6=false;
-			}
-			if(e.getSource()==bcompo4){
-				vehicule.addcomposant(boost);
-				test.setText("t'es une machine4"+" "+vehicule.poids);
-				c4=true;
-				c2=false; c3=false; c1=false; c5=false; c6=false;
-			}
-			if(e.getSource()==bcompo5){
-				test.setText("t'es une machine5");
-				c5=true;
-				c2=false; c3=false; c4=false; c1=false; c6=false;
-			}
-			if(e.getSource()==bcompo6){
-				test.setText("t'es une machine6");
-				c6=true;
-				c2=false; c3=false; c4=false; c5=false; c1=false;
+			for(int i=0; i<c.length; i++){
+				if((e.getSource()==bcompo[i])&&!c[i]){
+					vehicule.addcomposant(compo[i].composant);
+					c[i]=true;
+					test.setText("t'es une machine"+" " + vehicule.poids+" "+c[i]+" "+c[3]);
+					
+				}
 			}
 	}
 	}
 	class AffichageVehicule implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			if(e.getSource()==ajouter1){
-				hg.removeAll();
-				if(c1){
-					PanneauRoue roue = new PanneauRoue();
-					hg.add(roue);
-					test.setText("ajout roue");}
-				if(c2){
-					PanneauSki ski = new PanneauSki();
-					hg.add(ski);
-					test.setText("ajout skis");}
-				if(c3){
-					PanneauAiles ailes = new PanneauAiles();
-					hg.add(ailes);
-					test.setText("ajout ailes");}
-				if(c4){
-					PanneauBoost boost = new PanneauBoost();
-					hg.add(boost);
-					test.setText("ajout boost");}
-				if(c5){}
-				if(c6){}
+			for(int i=0; i<ajouter.length; i++){
+				if(e.getSource()==ajouter[i]){
+					h[i].removeAll();
+					for(int j=0; j<c.length;j++){
+						if(c[j]){
+							h[i].add(compo[i]);
+							test.setText("ajout"+ compo[i].composant.nomimage);}
+					}
+				}
 			}
-			if(e.getSource()==ajouter2){
-					h.removeAll();
-					if(c1){
-						PanneauRoue roue = new PanneauRoue();
-						h.add(roue);
-						test.setText("ajout roue");}
-					if(c2){
-						PanneauSki ski = new PanneauSki();
-						h.add(ski);
-						test.setText("ajout skis");}
-						
-					if(c3){
-						PanneauAiles ailes = new PanneauAiles();
-						h.add(ailes);
-						test.setText("ajout ailes");}
-					if(c4){
-						PanneauBoost boost = new PanneauBoost();
-						h.add(boost);
-						test.setText("ajout ailes");}
-					if(c5){}
-					if(c6){}
-			}	if(e.getSource()==ajouter3){
-						hd.removeAll();
-						if(c1){
-							PanneauRoue roue = new PanneauRoue();
-							hd.add(roue);
-							test.setText("ajout roue");}
-					if(c2){
-						PanneauSki ski = new PanneauSki();
-						hd.add(ski);
-						test.setText("ajout skis");}
-						
-					if(c3){
-						PanneauAiles ailes = new PanneauAiles();
-						hd.add(ailes);
-						test.setText("ajout ailes");}
-					if(c4){
-						PanneauBoost boost = new PanneauBoost();
-						hd.add(boost);
-						test.setText("ajout ailes");}
-					if(c5){}
-					if(c6){}
-			}	if(e.getSource()==ajouter4){
-						bg.removeAll();
-						if(c1){
-							PanneauRoue roue = new PanneauRoue();
-							bg.add(roue);
-							test.setText("ajout roue");}
-					if(c2){
-						PanneauSki ski = new PanneauSki();
-						bg.add(ski);
-						test.setText("ajout skis");}
-						
-					if(c3){
-						PanneauAiles ailes = new PanneauAiles();
-						bg.add(ailes);
-						test.setText("ajout ailes");}
-					if(c4){
-						PanneauBoost boost = new PanneauBoost();
-						bg.add(boost);
-						test.setText("ajout ailes");}
-					if(c5){}
-					if(c6){}
-			}	if(e.getSource()==ajouter5){
-					b.removeAll();
-					if(c1){
-						PanneauRoue roue = new PanneauRoue();
-						b.add(roue);
-						test.setText("ajout roue");}
-					if(c2){
-						PanneauSki ski = new PanneauSki();
-						b.add(ski);
-						test.setText("ajout skis");}
-						
-					if(c3){
-						PanneauAiles ailes = new PanneauAiles();
-						b.add(ailes);
-						test.setText("ajout ailes");}
-					if(c4){
-						PanneauBoost boost = new PanneauBoost();
-						b.add(boost);
-						test.setText("ajout ailes");}
-					if(c5){}
-					if(c6){}
-			}
-			if(e.getSource()==ajouter6){
-					bd.removeAll();
-					if(c1){
-						PanneauRoue roue = new PanneauRoue();
-						bd.add(roue);
-						test.setText("ajout roue");}
-					if(c2){
-						PanneauSki ski = new PanneauSki();
-						bd.add(ski);
-						test.setText("ajout skis");}
-						
-					if(c3){
-						PanneauAiles ailes = new PanneauAiles();
-						bd.add(ailes);
-						test.setText("ajout ailes");}
-					if(c4){
-						PanneauBoost boost = new PanneauBoost();
-						bd.add(boost);
-						test.setText("ajout ailes");}
-					if(c5){}
-					if(c6){}
-			}
-		
 		}
-	
 	}
+
 
 public static void main(String[] args) {
     FenConstruction uneFenetre = new FenConstruction();

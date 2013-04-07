@@ -28,29 +28,14 @@ public class BoutonShop extends JButton implements MouseListener{
  
   public void paintComponent(Graphics g){
     Graphics2D g2d = (Graphics2D)g;
-    GradientPaint gp = new GradientPaint(0, 0, Color.blue, 0, 20, Color.cyan, true);
-    g2d.setPaint(gp);
     g2d.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-    g2d.setColor(Color.black);
-    
-    //Objet permettant de connaître les propriétés d'une police, dont la taille
-    FontMetrics fm = g2d.getFontMetrics();
-    //Hauteur de la police d'écriture
-    int height = fm.getHeight();
-    //Largeur totale de la chaîne passée en paramètre
-    int width = fm.stringWidth(this.name);
- 
-    //On calcule alors la position du texte, et le tour est joué
-    g2d.drawString(this.name, this.getWidth() / 2 - (width / 2), (this.getHeight() / 2) + (height / 4));     
   }
  
-  public void mouseClicked(MouseEvent event) {
-    //Inutile d'utiliser cette méthode ici       
+  public void mouseClicked(MouseEvent event) {      
   }
  
   public void mouseEntered(MouseEvent event) {    
-    //Nous changeons le fond de notre image pour le jaune lors du survol, avec le fichier fondBoutonHover.png
-    try {
+	  try {
       img = ImageIO.read(new File("image/Shop_souris.png"));   
     } catch (IOException e) {
       e.printStackTrace();
@@ -58,7 +43,6 @@ public class BoutonShop extends JButton implements MouseListener{
   }
  
   public void mouseExited(MouseEvent event) {
-    //Nous changeons le fond de notre image pour le vert lorsque nous quittons le bouton, avec le fichier fondBouton.png
     try {
       img = ImageIO.read(new File("image/Shop.png"));
     } catch (IOException e) {
@@ -67,7 +51,6 @@ public class BoutonShop extends JButton implements MouseListener{
   }
  
   public void mousePressed(MouseEvent event) {
-    //Nous changeons le fond de notre image pour le jaune lors du clic gauche, avec le fichier fondBoutonClic.png
     try {
       img = ImageIO.read(new File("image/Shop_clic.png"));
     } catch (IOException e) {
@@ -76,7 +59,6 @@ public class BoutonShop extends JButton implements MouseListener{
   }
  
   public void mouseReleased(MouseEvent event) {
-    //Nous changeons le fond de notre image pour l'orange lorsque nous relâchons le clic avec le fichier fondBoutonHover.png si la souris est toujours sur le bouton
     if((event.getY() > 0 && event.getY() < this.getHeight()) && (event.getX() > 0 && event.getX() < this.getWidth())){
       try {
         img = ImageIO.read(new File("image/Shop_souris.png"));
@@ -84,7 +66,6 @@ public class BoutonShop extends JButton implements MouseListener{
         e.printStackTrace();
       }
     }
-    //Si on se trouve à l'extérieur, on dessine le fond par défaut
     else{
       try {
         img = ImageIO.read(new File("image/Shop.png")); 
